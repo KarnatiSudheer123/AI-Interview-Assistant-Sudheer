@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI Interview Assistant - Crack Your Dream Job</title>
+<meta name="description" content="AI-powered interview preparation: mock interviews, resume analyzer, speech recognition, performance dashboard." />
+<link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+
+<!-- Loading Screen -->
+<div id="loader">
+  <div class="loader-ring"></div>
+  <p>Loading AI Interview Assistant...</p>
+</div>
+
+<!-- Particle Canvas -->
+<canvas id="particles"></canvas>
+
+<!-- Navbar -->
+<nav class="navbar glass">
+  <div class="logo">🤖 AI Interview Assistant</div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#practice">Practice</a></li>
+    <li><a href="#resume">Resume</a></li>
+    <li><a href="#dashboard">Dashboard</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button id="themeToggle" class="icon-btn" title="Toggle theme">🌙</button>
+    <button id="menuToggle" class="icon-btn mobile-only">☰</button>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section id="home" class="hero">
+  <div class="hero-content fade-in">
+    <h1 class="hero-title">Crack Your Dream Job with <span class="gradient-text">AI Interview Assistant</span></h1>
+    <p class="typing"><span id="typedText"></span><span class="cursor">|</span></p>
+    <div class="hero-buttons">
+      <a href="#practice" class="btn btn-primary">🚀 Start Interview</a>
+      <a href="Karnati_Sudheer.pdf" class="btn btn-ghost">📄 Upload Resume</a>
+    </div>
+  </div>
+  <div class="hero-illustration floating">
+    <div class="orb"></div>
+    <div class="orb orb2"></div>
+    <div class="ai-emoji">🧠</div>
+  </div>
+</section>
+
+<!-- About -->
+<section id="about" class="section reveal">
+  <h2>About the Platform</h2>
+  <div class="grid-3">
+    <div class="card glass">
+      <h3>🎯 Project Overview</h3>
+      <p>An AI-powered platform that simulates real interviews, analyzes resumes, and helps you build confidence to land your dream job.</p>
+    </div>
+    <div class="card glass">
+      <h3>💡 Benefits</h3>
+      <p>Personalized feedback, real-time speech analysis, and tailored question sets across technical, HR, and behavioral rounds.</p>
+    </div>
+    <div class="card glass">
+      <h3>🎓 Who It's For</h3>
+      <p>Students, freshers, and professionals preparing for their next big opportunity — practice anytime, anywhere.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Features -->
+<section id="features" class="section reveal">
+  <h2>Core Features</h2>
+  <div class="grid-3">
+    <div class="card glass hover-lift"><h3>🤖 AI Mock Interview</h3><p>Random technical, HR, behavioral & aptitude questions across difficulty levels.</p></div>
+    <div class="card glass hover-lift"><h3>📊 Resume Analyzer</h3><p>Get a resume score, detect missing keywords & receive smart suggestions.</p></div>
+    <div class="card glass hover-lift"><h3>📚 Question Bank</h3><p>Java, Python, JS, React, SQL, DBMS, OS, Networks, HR & more.</p></div>
+    <div class="card glass hover-lift"><h3>🧠 AI Feedback</h3><p>Confidence, communication & technical scores after every answer.</p></div>
+    <div class="card glass hover-lift"><h3>🎙️ Speech Recognition</h3><p>Live transcript with start/stop recording controls.</p></div>
+    <div class="card glass hover-lift"><h3>📈 Performance Dashboard</h3><p>Track interviews, success rate, strong & weak areas.</p></div>
+  </div>
+</section>
+
+<!-- Interview Practice -->
+<section id="practice" class="section reveal">
+  <h2>Interview Practice</h2>
+  <div class="card glass practice-card">
+    <div class="practice-controls">
+      <select id="categorySelect">
+        <option value="technical">Technical</option>
+        <option value="hr">HR</option>
+        <option value="behavioral">Behavioral</option>
+        <option value="aptitude">Aptitude</option>
+      </select>
+      <select id="difficultySelect">
+        <option value="beginner">Beginner</option>
+        <option value="intermediate">Intermediate</option>
+        <option value="advanced">Advanced</option>
+      </select>
+      <button class="btn btn-primary" id="startInterviewBtn">Start Interview</button>
+      <button class="btn btn-ghost" id="nextQuestionBtn">Next Question</button>
+    </div>
+    <div class="interview-meta">
+      <span>⏱️ Timer: <strong id="timerDisplay">00:00</strong></span>
+      <span>❓ Question: <strong id="qCounter">0</strong></span>
+    </div>
+    <div class="question-box" id="questionBox">Click "Start Interview" to begin.</div>
+    <div class="speech-controls">
+      <button class="btn btn-primary" id="recordBtn">🎙️ Start Recording</button>
+      <button class="btn btn-ghost" id="stopBtn">⏹️ Stop</button>
+      <button class="btn btn-ghost" id="bookmarkBtn">⭐ Bookmark</button>
+    </div>
+    <textarea id="transcript" placeholder="Your answer / live transcript will appear here..."></textarea>
+    <div class="feedback-grid">
+      <div class="meter"><span>Confidence</span><div class="bar"><div id="confBar"></div></div></div>
+      <div class="meter"><span>Communication</span><div class="bar"><div id="commBar"></div></div></div>
+      <div class="meter"><span>Technical</span><div class="bar"><div id="techBar"></div></div></div>
+    </div>
+    <p id="suggestion" class="suggestion"></p>
+  </div>
+</section>
+
+<!-- Resume Analyzer -->
+<section id="resume" class="section reveal">
+  <h2>Resume Analyzer</h2>
+  <div class="card glass">
+    <input type="file" id="resumeFile" accept=".pdf,.doc,.docx,.txt" />
+    <div class="resume-result">
+      <div class="progress-circle" id="resumeCircle">
+        <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" class="track"/><circle cx="50" cy="50" r="45" class="fill" id="resumeFill"/></svg>
+        <div class="circle-label"><span id="resumeScore">0</span>%</div>
+      </div>
+      <div class="resume-info">
+        <h4>Skills Detected</h4>
+        <div class="tags" id="skillsTags"></div>
+        <h4>Missing Keywords</h4>
+        <div class="tags" id="missingTags"></div>
+        <h4>Suggestions</h4>
+        <ul id="resumeSuggestions"></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Question Bank -->
+<section id="bank" class="section reveal">
+  <h2>Question Bank</h2>
+  <div class="card glass">
+    <input type="text" id="bankSearch" placeholder="🔍 Search questions..." />
+    <div class="bank-tabs" id="bankTabs"></div>
+    <ul class="bank-list" id="bankList"></ul>
+  </div>
+</section>
+
+<!-- Dashboard -->
+<section id="dashboard" class="section reveal">
+  <h2>Performance Dashboard</h2>
+  <div class="grid-4">
+    <div class="card glass stat"><h4>Interviews</h4><p id="statInterviews">0</p></div>
+    <div class="card glass stat"><h4>Success Rate</h4><p id="statSuccess">0%</p></div>
+    <div class="card glass stat"><h4>Avg Score</h4><p id="statAvg">0</p></div>
+    <div class="card glass stat"><h4>Readiness</h4><p id="statReady">0%</p></div>
+  </div>
+  <div class="grid-2">
+    <div class="card glass"><h3>Weekly Progress</h3><canvas id="barChart" height="180"></canvas></div>
+    <div class="card glass"><h3>Skill Distribution</h3><canvas id="pieChart" height="180"></canvas></div>
+    <div class="card glass"><h3>Growth Trend</h3><canvas id="lineChart" height="180"></canvas></div>
+    <div class="card glass">
+      <h3>Strong & Weak Areas</h3>
+      <p><strong>Strong:</strong> <span id="strongAreas">Communication, Logic</span></p>
+      <p><strong>Weak:</strong> <span id="weakAreas">DBMS, System Design</span></p>
+      <button class="btn btn-primary" id="downloadReport">⬇️ Download Report</button>
+    </div>
+  </div>
+</section>
+
+<!-- Extras -->
+<section id="extras" class="section reveal">
+  <h2>Extras</h2>
+  <div class="grid-3">
+    <div class="card glass">
+      <h3>🎯 Daily Challenge</h3>
+      <p id="dailyChallenge">Loading today's challenge...</p>
+    </div>
+    <div class="card glass">
+      <h3>💼 AI Career Suggestion</h3>
+      <p id="careerSuggestion">Based on your skills, consider Frontend Engineering.</p>
+    </div>
+    <div class="card glass">
+      <h3>💬 Motivational Quote</h3>
+      <p id="quote">"Success is the sum of small efforts repeated daily."</p>
+    </div>
+    <div class="card glass">
+      <h3>🏅 Achievements</h3>
+      <div class="badges">
+        <span class="badge">🔥 Streak</span>
+        <span class="badge">🥇 First Win</span>
+        <span class="badge">📚 Bookworm</span>
+      </div>
+    </div>
+    <div class="card glass">
+      <h3>📝 Notes</h3>
+      <textarea id="notesArea" placeholder="Write your notes..."></textarea>
+    </div>
+    <div class="card glass">
+      <h3>🔔 Notifications</h3>
+      <ul id="notifList"><li>Welcome! Start your first interview.</li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="section reveal">
+  <h2>FAQ</h2>
+  <div class="faq-list">
+    <details class="card glass"><summary>Is this free to use?</summary><p>Yes, completely free for learners.</p></details>
+    <details class="card glass"><summary>Does it use real AI?</summary><p>The interface simulates AI feedback for practice purposes.</p></details>
+    <details class="card glass"><summary>Can I track my progress?</summary><p>Yes — your stats are saved in your browser's local storage.</p></details>
+    <details class="card glass"><summary>Does speech recognition work offline?</summary><p>It uses your browser's Web Speech API and needs an internet connection in most browsers.</p></details>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="section reveal">
+  <h2>Contact Us</h2>
+  <form class="card glass contact-form" id="contactForm">
+    <input type="text" id="cName" placeholder="Your Name" required />
+    <input type="email" id="cEmail" placeholder="Your Email" required />
+    <textarea id="cMsg" placeholder="Your Message" required></textarea>
+    <button class="btn btn-primary" type="submit">Send Message</button>
+    <p id="contactSuccess" class="success-msg"></p>
+  </form>
+</section>
+
+<!-- Footer -->
+<footer class="footer glass">
+  <div class="footer-grid">
+    <div>
+      <h4>AI Interview Assistant</h4>
+      <p>Your AI companion to land your dream job.</p>
+    </div>
+    <div>
+      <h4>Quick Links</h4>
+      <a href="#home">Home</a><a href="#features">Features</a><a href="#dashboard">Dashboard</a><a href="#contact">Contact</a>
+    </div>
+    <div>
+      <h4>Follow Us</h4>
+      <div class="socials">
+        <a href="https://www.facebook.com/karnati.sudheer.18" title="Facebook">📘</a>
+        <a href="#" title="Twitter">🐦</a>
+        <a href="https://www.linkedin.com/in/karnati-sudheer-21970437a/" title="LinkedIn">🔗</a>
+        <a href="https://github.com/KarnatiSudheer123" title="GitHub">🐙</a>
+      </div>
+    </div>
+  </div>
+  <p class="copyright">© 2026 AI Interview Assistant. All rights reserved.</p>
+</footer>
+<script src="/script.js"></script>
+</body>
+</html>
